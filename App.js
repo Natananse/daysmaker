@@ -1,8 +1,21 @@
 import {Text,View,StyleSheet,TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TextInput} from 'react-native-paper';
+import FocusTime from './.claude/component/FocusTime';
+import {useState} from 'react';
 
 export default function App() {
+const [addText, setAddText] = useState(false);
+const [text, setText] = useState('');
+const handleAddText = () => {
+  setAddText(prevState => !prevState);
+}
+
+if(addText) {
+  return (
+    <FocusTime onBack={handleAddText} />
+  )
+}
   return (
     <SafeAreaView style={styles.container}> 
     <View style={styles.row}>
@@ -11,8 +24,10 @@ export default function App() {
       mode='outlined'
       style={styles.InputText}
       label='focus'
+      value={text}
+      onChangeText={text => setText(text)}
       ></TextInput>
-      <TouchableOpacity style={styles.CircularButton}>
+      <TouchableOpacity style={styles.CircularButton} onPress={handleAddText}>
         <Text style={styles.plustext}>+</Text>
       </TouchableOpacity>
       </View>
