@@ -1,83 +1,66 @@
-import {Text,View,StyleSheet,TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {TextInput} from 'react-native-paper';
-import FocusTime from './.claude/component/FocusTime';
-import {useState} from 'react';
 
-export default function App() {
-const [addText, setAddText] = useState(false);
-const [text, setText] = useState('');
-const handleAddText = () => {
-  setAddText(prevState => !prevState);
-}
-
-if(addText) {
+export default function App(){
   return (
-    <FocusTime onBack={handleAddText} />
-  )
-}
-  return (
-    <SafeAreaView style={styles.container}> 
-    <View style={styles.row}>
-      <TextInput 
-      placeholder='write what ever you want...'
-      mode='outlined'
-      style={styles.InputText}
-      label='focus'
-      value={text}
-      onChangeText={text => setText(text)}
-      ></TextInput>
-      <TouchableOpacity style={styles.CircularButton} onPress={handleAddText}>
-        <Text style={styles.plustext}>+</Text>
-      </TouchableOpacity>
+    <SafeAreaView style={styles.background}>
+      <View style={styles.row}>
+      <TextInput style={styles.title} placeholder="write what ever you want"></TextInput>
+      <TouchableOpacity style={styles.button}>
+        <Text>+</Text>
+        </TouchableOpacity>
       </View>
-      <Text style={styles.buttonText}># things we have foucesed on</Text>
-      <Text style={styles.additionalText}># thanks a lot</Text>
+      <Text style={styles.text}>*things we are going to do</Text>
+      <Text style={styles.texts}>Tasks</Text>
 
     </SafeAreaView>
-  )}
+  )
+}
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    backgroundColor: '#f5bf0c',
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 20,
+  },
+  title: {
+    label: 'outlined Input',
+    mode: 'outlined',
+    width: '60%',
+    height: 50,
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 5,
+    padding: 10,
+    margin: 20,
+  },
+  button: {
+    backgroundColor: 'transparent',
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20,
+    borderColor: 'black',
+    borderWidth: 2,
+    left: -20,
+    marginLeft: 30,
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: 20,
+  },
+  texts: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: 20,
+  },
+})
 
-  const styles = StyleSheet.create ({
-    row: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    container: {
-      flex: 1,
-      backgroundColor: 'blue',
-    },
-    InputText: {
-      margin: 10,
-    },
-    buttonText: {
-      color: 'white',
-      textAlign: 'left',
-      margin: 10,
-      padding: 10,
-      fontSize:20,
-      fontWeight: 'bold',
-    },
-    additionalText: {
-      color: 'white',
-      textAlign: 'left',
-      margin: 10,
-      padding: 10,
-      fontSize:20,
-      fontWeight: 'bold',
-    },
-    CircularButton: {
-      width: 50,
-      height: 50,
-      borderRadius: 25,
-      backgroundColor: 'blue',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderColor: 'white',
-      borderWidth: 2,
-    },
-    plustext: {
-      color: 'white',
-      fontSize: 24,
-      textAlign: 'center',
-    }
-  });
+
