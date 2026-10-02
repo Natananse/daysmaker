@@ -1,12 +1,22 @@
 import {View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import FocusTime from './.claude/component/FocusTime';
+import {NavigationContainer} from '@react-navigation/native';
 
+const stack = createNativeStackNavigator();
 export default function App(){
   return (
     <SafeAreaView style={styles.background}>
       <View style={styles.row}>
-      <TextInput style={styles.title} placeholder="write what ever you want"></TextInput>
-      <TouchableOpacity style={styles.button}>
+      <TextInput style={styles.title} placeholder="write what ever you want"/>
+      <NavigationContainer>
+        <stack.Navigator>
+          <stack.Screen name="Home" component={App} />
+          <stack.Screen name="FocusTime" component={FocusTime} />
+        </stack.Navigator>
+      </NavigationContainer>
+      <TouchableOpacity style={styles.button}
+      onPress={() => navigation.navigate('FocusTime')}>
         <Text>+</Text>
         </TouchableOpacity>
       </View>
