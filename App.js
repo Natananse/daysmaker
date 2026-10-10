@@ -2,6 +2,7 @@ import {View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FocusTime from './.claude/component/FocusTime';
 import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const stack = createNativeStackNavigator();
 export default function App(){
