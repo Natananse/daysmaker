@@ -5,10 +5,12 @@ import {useState, useEffect} from 'react';
 
 
 export default function FocusTime({onBack}) {
+    const time=[6000,12000,18000]
+
   return(
     <SafeAreaView style={styles.background}>
       <View style={{ width: '100%', alignItems: 'stretch' }}>
-        <Text>sec</Text>
+        <Text>focus on</Text>
         <Text>sec</Text>
         <Text>sec</Text>
         <View style={styles.progressBar} />

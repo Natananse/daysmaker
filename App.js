@@ -5,14 +5,22 @@ import FocusTime from './.claude/component/FocusTime';
 
  
 export default function App() {
+  const [inputText, setInputText] = useState('');
+  const [tasks, setTasks] = useState([]);
+  const [currentTask, setCurrentTask] = useState('');
   const [showFocusTime, setShowFocusTime] = useState(false);
   if (showFocusTime) {
-  return <FocusTime onBack={() => setShowFocusTime(false)} />;
+  return <FocusTime 
+  tasks={currentTask}
+  onBack={() => setShowFocusTime(false)} />;
 }
   return(
     <SafeAreaView style={styles.background}>
       <View style={styles.inputContainer}>
-      <TextInput style={styles.input} placeholder="add what evere you want">
+      <TextInput style={styles.input} placeholder="add what evere you want"
+      onChangeText={setInputText}
+      value={inputText}
+      >
         </TextInput>
         <TouchableOpacity style={styles.button} onPress={() => setShowFocusTime(true)}>
           <Text>+</Text>
