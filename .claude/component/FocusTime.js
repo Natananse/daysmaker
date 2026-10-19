@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: 'white',
     alignSelf: 'stretch',
   },
 });

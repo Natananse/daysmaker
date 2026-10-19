@@ -40,7 +40,7 @@ export default function App() {
     input: {
       height: 50,
       width: 200,
-      borderColor: 'goldenrod',
+      borderColor: 'black',
       borderWidth: 1,
       marginBottom: 10,
       marginTop: 10,
@@ -67,7 +67,7 @@ export default function App() {
     },
     button: {
       backgroundColor: 'transparent',
-      borderColor: 'goldenrod',
+      borderColor: 'black',
       borderWidth: 2,
       height: 50,
       width: 50,
