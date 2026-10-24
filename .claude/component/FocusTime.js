@@ -10,8 +10,12 @@ export default function FocusTime({onBack}) {
   return(
     <SafeAreaView style={styles.background}>
       <View style={{ width: '100%', alignItems: 'stretch' }}>
-        <Text>focus on</Text>
-        <Text>sec</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.text}>{time[0]}</Text>
+          <Text style={styles.text}>{time[1]}</Text>
+          <Text style={styles.text}>{time[2]}</Text>
+        </View>
+        <Text>focus time</Text>
         <Text>sec</Text>
         <View style={styles.progressBar} />
         <Text>sec</Text>
@@ -31,10 +35,25 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
+  inputContainer: {
+    width: '100%',
+    alignItems: 'stretch',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft: 10,
+    marginRight: 30,
+    gap: 20,
+    height: 50,
+    width: 50,
+    borderWidth: 1,
+    borderColor: 'white',
+    borderRadius: 25,
+  },
   text: {
     fontSize: 20,
     fontWeight: 'bold',
     color: 'white',
+    alignSelf: 'center',
     marginLeft: 30,
   },
   progressBar: {
@@ -45,5 +64,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'white',
     alignSelf: 'stretch',
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+    alignSelf: 'center',
+    marginLeft: 30,
   },
 });
