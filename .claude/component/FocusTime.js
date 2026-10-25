@@ -6,6 +6,21 @@ import {useState, useEffect} from 'react';
 
 export default function FocusTime({onBack}) {
     const time=[6000,12000,18000]
+    const [progress, setProgress] = useState(0);
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setProgress((prevProgress) => {
+          if (prevProgress >= 100) {
+            clearInterval(interval);
+            return 100;
+          }
+          return prevProgress + 1;
+        });
+      }, 1000); // Update progress every second
+
+      return () => clearInterval(interval); // Cleanup on unmount
+    }, []); 
 
   return(
     <SafeAreaView style={styles.background}>
