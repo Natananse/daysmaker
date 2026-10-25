@@ -33,7 +33,7 @@ export default function App() {
   const styles = StyleSheet.create({
     background: {
       flex: 1,
-      backgroundColor: '#312f27',
+      backgroundColor: '#838377',
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
     },
