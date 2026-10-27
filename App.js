@@ -6,26 +6,35 @@ import FocusTime from './.claude/component/FocusTime';
  
 export default function App() {
   const [inputText, setInputText] = useState('');
-  const [tasks, setTasks] = useState([]);
-  const [currentTask, setCurrentTask] = useState('');
   const [showFocusTime, setShowFocusTime] = useState(false);
   if (showFocusTime) {
   return <FocusTime 
-  tasks={currentTask}
+  task={inputText.trim()}
   onBack={() => setShowFocusTime(false)} />;
 }
   return(
     <SafeAreaView style={styles.background}>
       <View style={styles.inputContainer}>
-      <TextInput style={styles.input} placeholder="add what evere you want"
+      <TextInput style={styles.input} placeholder="What do you want to focus on?"
       onChangeText={setInputText}
       value={inputText}
+      accessibilityLabel="Focus task"
       >
         </TextInput>
-        <TouchableOpacity style={styles.button} onPress={() => setShowFocusTime(true)}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setShowFocusTime(true)}
+          accessibilityRole="button"
+          accessibilityLabel="Start focus session"
+        >
           <Text>+</Text>
         </TouchableOpacity>
         </View>
+      {inputText.trim().length > 0 && (
+        <Text style={styles.currentTask}>
+          Focus task: {inputText.trim()}
+        </Text>
+      )}
       <Text style={styles.text}>My App</Text>
     </SafeAreaView>
   );
@@ -64,6 +73,13 @@ export default function App() {
       fontWeight: 'bold',
       color: 'white',
       marginLeft: 30,
+    },
+    currentTask: {
+      color: 'white',
+      fontSize: 18,
+      marginLeft: 30,
+      marginTop: 12,
+      marginRight: 30,
     },
     button: {
       backgroundColor: 'transparent',

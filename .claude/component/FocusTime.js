@@ -5,7 +5,7 @@ import {StatusBar} from 'expo-status-bar';
 
 
 
-export default function FocusTime({onBack}) {
+export default function FocusTime({onBack, task}) {
     const time=[6000,12000,18000]
     const [progress, setProgress] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
@@ -35,6 +35,9 @@ export default function FocusTime({onBack}) {
           <Text style={styles.text}>{time[1]}</Text>
           <Text style={styles.text}>{time[2]}</Text>
         </View>
+        <Text style={styles.taskText}>
+          {task ? `Focusing on: ${task}` : 'Choose a task to focus on'}
+        </Text>
         <View style={styles.countSection}>
           <Text style={styles.countLabel}>Focus time</Text>
           <Text style={styles.countValue}>{progress}</Text>
@@ -84,6 +87,13 @@ const styles = StyleSheet.create({
     color: 'white',
     alignSelf: 'center',
     marginLeft: 0,
+  },
+  taskText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginBottom: 28,
   },
   countSection: {
     alignItems: 'center',
