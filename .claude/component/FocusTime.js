@@ -1,14 +1,18 @@
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useState, useEffect} from 'react';
+import {StatusBar} from 'expo-status-bar';
 
 
 
 export default function FocusTime({onBack}) {
     const time=[6000,12000,18000]
     const [progress, setProgress] = useState(0);
+    const [isPaused, setIsPaused] = useState(false);
 
     useEffect(() => {
+      if (isPaused || progress >= 100) return undefined;
+
       const interval = setInterval(() => {
         setProgress((prevProgress) => {
           if (prevProgress >= 100) {
@@ -20,10 +24,11 @@ export default function FocusTime({onBack}) {
       }, 1000); // Update progress every second
 
       return () => clearInterval(interval); // Cleanup on unmount
-    }, []); 
+    }, [isPaused, progress]);
 
   return(
     <SafeAreaView style={styles.background}>
+      <StatusBar style="light" />
       <View style={{ width: '100%', alignItems: 'stretch' }}>
         <View style={styles.inputContainer}>
           <Text style={styles.text}>{time[0]}</Text>
@@ -39,7 +44,18 @@ export default function FocusTime({onBack}) {
           <View style={[styles.progressBar, {width: `${progress}%`}]} />
         </View>
         <TouchableOpacity onPress={onBack}>
-          <Text>back</Text>
+          <Text style={styles.backButtonText}>Back</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.pauseButton}
+          onPress={() => setIsPaused((paused) => !paused)}
+          disabled={progress >= 100}
+          accessibilityRole="button"
+          accessibilityLabel={isPaused ? 'Resume focus timer' : 'Pause focus timer'}
+        >
+          <Text style={styles.pauseButtonText}>
+            {progress >= 100 ? 'Session complete' : isPaused ? 'Resume' : 'Pause'}
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -102,5 +118,24 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: 'goldenrod',
     borderRadius: 5,
+  },
+  backButtonText: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'center',
+    paddingVertical: 8,
+  },
+  pauseButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 52,
+    borderRadius: 26,
+    backgroundColor: 'white',
+    marginTop: 12,
+  },
+  pauseButtonText: {
+    color: '#7f4141',
+    fontSize: 17,
+    fontWeight: 'bold',
   },
 });
