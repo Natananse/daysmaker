@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useState, useEffect} from 'react';
 
@@ -30,16 +30,18 @@ export default function FocusTime({onBack}) {
           <Text style={styles.text}>{time[1]}</Text>
           <Text style={styles.text}>{time[2]}</Text>
         </View>
-        <Text>focus time</Text>
-        <Text>sec</Text>
-        <View style={styles.progressBar} />
-        <Text>sec</Text>
-        <Text>sec</Text>
+        <View style={styles.countSection}>
+          <Text style={styles.countLabel}>Focus time</Text>
+          <Text style={styles.countValue}>{progress}</Text>
+          <Text style={styles.countUnit}>seconds</Text>
+        </View>
+        <View style={styles.progressTrack}>
+          <View style={[styles.progressBar, {width: `${progress}%`}]} />
+        </View>
         <TouchableOpacity onPress={onBack}>
           <Text>back</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.text}>Back</Text>
     </SafeAreaView>
   );
 }
@@ -47,44 +49,58 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     backgroundColor: '#9d5d5d',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 24,
   },
   inputContainer: {
     width: '100%',
-    alignItems: 'stretch',
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginLeft: 10,
-    marginRight: 30,
-    gap: 20,
+    gap: 12,
     height: 50,
-    width: 50,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 25,
+    marginBottom: 32,
   },
   text: {
     fontSize: 20,
     fontWeight: 'bold',
     color: 'white',
     alignSelf: 'center',
-    marginLeft: 30,
+    marginLeft: 0,
+  },
+  countSection: {
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  countLabel: {
+    color: 'white',
+    fontSize: 18,
+    textTransform: 'capitalize',
+  },
+  countValue: {
+    color: 'white',
+    fontSize: 72,
+    fontWeight: 'bold',
+    fontVariant: ['tabular-nums'],
+    lineHeight: 84,
+  },
+  countUnit: {
+    color: 'white',
+    fontSize: 16,
+    opacity: 0.8,
+  },
+  progressTrack: {
+    width: '100%',
+    height: 8,
+    borderRadius: 5,
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    overflow: 'hidden',
+    marginBottom: 28,
   },
   progressBar: {
-    height: 5,
+    height: '100%',
     backgroundColor: 'goldenrod',
-    width: '100%',
     borderRadius: 5,
-    borderWidth: 1,
-    borderColor: 'white',
-    alignSelf: 'stretch',
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'white',
-    alignSelf: 'center',
-    marginLeft: 30,
   },
 });
