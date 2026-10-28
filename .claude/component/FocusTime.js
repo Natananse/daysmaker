@@ -67,7 +67,7 @@ export default function FocusTime({onBack, task}) {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    backgroundColor: '#9d5d5d',
+    backgroundColor: '#f1ebeb',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 24,
