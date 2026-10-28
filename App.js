@@ -42,7 +42,7 @@ export default function App() {
   const styles = StyleSheet.create({
     background: {
       flex: 1,
-      backgroundColor: '#838377',
+      backgroundColor: '#9b9b54',
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
     },
