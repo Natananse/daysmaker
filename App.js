@@ -1,4 +1,4 @@
-import {Text, View, StyleSheet, TouchableOpacity, TextInput, ImageBackground} from 'react-native';
+import {Text, View, StyleSheet, Pressable, TextInput, ImageBackground, ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useState, useEffect} from 'react';
 import FocusTime from './.claude/component/FocusTime';
@@ -19,6 +19,11 @@ export default function App() {
       style={styles.backgroundImage}
     >
     <SafeAreaView style={styles.background}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled"
+      >
       <View style={styles.inputContainer}>
       <TextInput style={styles.input} placeholder="What do you want to focus on?"
       onChangeText={setInputText}
@@ -26,14 +31,14 @@ export default function App() {
       accessibilityLabel="Focus task"
       >
         </TextInput>
-        <TouchableOpacity
+        <Pressable
           style={styles.button}
           onPress={() => setShowFocusTime(true)}
           accessibilityRole="button"
           accessibilityLabel="Start focus session"
         >
           <Text>+</Text>
-        </TouchableOpacity>
+        </Pressable>
         </View>
       {inputText.trim().length > 0 && (
         <Text style={styles.currentTask}>
@@ -41,6 +46,7 @@ export default function App() {
         </Text>
       )}
       <Text style={styles.text}>My App</Text>
+      </ScrollView>
     </SafeAreaView>
     </ImageBackground>
   );
@@ -54,6 +60,13 @@ export default function App() {
     },
     backgroundImage: {
       flex: 1,
+    },
+    scrollContent: {
+      flexGrow: 1,
+    },
+    scrollView: {
+      flex: 1,
+      width: '100%',
     },
     input: {
       height: 50,

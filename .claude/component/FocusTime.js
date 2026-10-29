@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, TouchableOpacity, ImageBackground} from 'react-native';
+import {View, Text, StyleSheet, Pressable, ImageBackground, ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useState, useEffect} from 'react';
 import {StatusBar} from 'expo-status-bar';
@@ -34,6 +34,7 @@ export default function FocusTime({onBack, task}) {
     >
     <SafeAreaView style={styles.background}>
       <StatusBar style="light" />
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
       <View style={{ width: '100%', alignItems: 'stretch' }}>
         <View style={styles.inputContainer}>
           <Text style={styles.text}>{time[0]}</Text>
@@ -51,10 +52,10 @@ export default function FocusTime({onBack, task}) {
         <View style={styles.progressTrack}>
           <View style={[styles.progressBar, {width: `${progress}%`}]} />
         </View>
-        <TouchableOpacity onPress={onBack}>
+        <Pressable onPress={onBack} accessibilityRole="button" accessibilityLabel="Go back">
           <Text style={styles.backButtonText}>Back</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+        </Pressable>
+        <Pressable
           style={styles.pauseButton}
           onPress={() => setIsPaused((paused) => !paused)}
           disabled={progress >= 100}
@@ -64,8 +65,9 @@ export default function FocusTime({onBack, task}) {
           <Text style={styles.pauseButtonText}>
             {progress >= 100 ? 'Session complete' : isPaused ? 'Resume' : 'Pause'}
           </Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
+      </ScrollView>
     </SafeAreaView>
     </ImageBackground>
   );
@@ -80,6 +82,14 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  scrollView: {
+    flex: 1,
+    width: '100%',
   },
   inputContainer: {
     width: '100%',
