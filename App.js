@@ -1,6 +1,6 @@
 import {Text, View, StyleSheet, Pressable, TextInput, ImageBackground, ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import FocusTime from './.claude/component/FocusTime';
 
  
@@ -24,16 +24,24 @@ export default function App() {
         contentContainerStyle={styles.scrollContent}
         keyboardShouldPersistTaps="handled"
       >
+      <Text style={styles.title}>Daysmaker</Text>
       <View style={styles.inputContainer}>
       <TextInput style={styles.input} placeholder="What do you want to focus on?"
       onChangeText={setInputText}
       value={inputText}
       accessibilityLabel="Focus task"
+      returnKeyType="done"
+      maxLength={120}
       >
         </TextInput>
         <Pressable
-          style={styles.button}
+          style={({pressed}) => [
+            styles.button,
+            !inputText.trim() && styles.buttonDisabled,
+            pressed && inputText.trim() && styles.buttonPressed,
+          ]}
           onPress={() => setShowFocusTime(true)}
+          disabled={!inputText.trim()}
           accessibilityRole="button"
           accessibilityLabel="Start focus session"
         >
@@ -45,7 +53,6 @@ export default function App() {
           Focus task: {inputText.trim()}
         </Text>
       )}
-      <Text style={styles.text}>My App</Text>
       </ScrollView>
     </SafeAreaView>
     </ImageBackground>
@@ -90,11 +97,13 @@ export default function App() {
       marginRight: 30,
       gap: 20
     },
-    text: {
-      fontSize: 20,
+    title: {
+      fontSize: 34,
       fontWeight: 'bold',
       color: 'white',
       marginLeft: 30,
+      marginTop: 24,
+      marginBottom: 16,
     },
     currentTask: {
       color: 'white',
@@ -104,14 +113,19 @@ export default function App() {
       marginRight: 30,
     },
     button: {
-      backgroundColor: 'transparent',
-      borderColor: 'black',
-      borderWidth: 2,
+      backgroundColor: '#ffffff',
       height: 50,
       width: 50,
       borderRadius: 25,
       alignItems: 'center',
       justifyContent: 'center',
       marginRight: 30,
+    },
+    buttonDisabled: {
+      opacity: 0.5,
+    },
+    buttonPressed: {
+      opacity: 0.75,
+      transform: [{scale: 0.96}],
     },
   });

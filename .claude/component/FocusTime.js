@@ -6,25 +6,33 @@ import {StatusBar} from 'expo-status-bar';
 
 
 export default function FocusTime({onBack, task}) {
-    const time=[6000,12000,18000]
-    const [progress, setProgress] = useState(0);
+    const durations = [10, 20, 30];
+    const [durationMinutes, setDurationMinutes] = useState(10);
+    const [remainingSeconds, setRemainingSeconds] = useState(10 * 60);
     const [isPaused, setIsPaused] = useState(false);
 
     useEffect(() => {
-      if (isPaused || progress >= 100) return undefined;
+      if (isPaused || remainingSeconds <= 0) return undefined;
 
       const interval = setInterval(() => {
-        setProgress((prevProgress) => {
-          if (prevProgress >= 100) {
-            clearInterval(interval);
-            return 100;
-          }
-          return prevProgress + 1;
-        });
-      }, 1000); // Update progress every second
+        setRemainingSeconds((seconds) => Math.max(seconds - 1, 0));
+      }, 1000);
 
       return () => clearInterval(interval); // Cleanup on unmount
-    }, [isPaused, progress]);
+    }, [isPaused, remainingSeconds]);
+
+    const progress = Math.round(
+      ((durationMinutes * 60 - remainingSeconds) / (durationMinutes * 60)) * 100,
+    );
+    const formattedTime = `${Math.floor(remainingSeconds / 60)
+      .toString()
+      .padStart(2, '0')}:${(remainingSeconds % 60).toString().padStart(2, '0')}`;
+
+    const selectDuration = (minutes) => {
+      setDurationMinutes(minutes);
+      setRemainingSeconds(minutes * 60);
+      setIsPaused(false);
+    };
 
   return(
     <ImageBackground
@@ -37,17 +45,38 @@ export default function FocusTime({onBack, task}) {
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
       <View style={{ width: '100%', alignItems: 'stretch' }}>
         <View style={styles.inputContainer}>
-          <Text style={styles.text}>{time[0]}</Text>
-          <Text style={styles.text}>{time[1]}</Text>
-          <Text style={styles.text}>{time[2]}</Text>
+          {durations.map((minutes) => (
+            <Pressable
+              key={minutes}
+              onPress={() => selectDuration(minutes)}
+              style={[
+                styles.durationButton,
+                durationMinutes === minutes && styles.durationButtonSelected,
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel={`${minutes} minute focus session`}
+              accessibilityState={{selected: durationMinutes === minutes}}
+            >
+              <Text
+                style={[
+                  styles.durationText,
+                  durationMinutes === minutes && styles.durationTextSelected,
+                ]}
+              >
+                {minutes} min
+              </Text>
+            </Pressable>
+          ))}
         </View>
         <Text style={styles.taskText}>
           {task ? `Focusing on: ${task}` : 'Choose a task to focus on'}
         </Text>
         <View style={styles.countSection}>
           <Text style={styles.countLabel}>Focus time</Text>
-          <Text style={styles.countValue}>{progress}</Text>
-          <Text style={styles.countUnit}>seconds</Text>
+          <Text style={styles.countValue}>{formattedTime}</Text>
+          <Text style={styles.countUnit}>
+            {remainingSeconds === 0 ? 'Session complete' : 'remaining'}
+          </Text>
         </View>
         <View style={styles.progressTrack}>
           <View style={[styles.progressBar, {width: `${progress}%`}]} />
@@ -58,12 +87,12 @@ export default function FocusTime({onBack, task}) {
         <Pressable
           style={styles.pauseButton}
           onPress={() => setIsPaused((paused) => !paused)}
-          disabled={progress >= 100}
+          disabled={remainingSeconds === 0}
           accessibilityRole="button"
           accessibilityLabel={isPaused ? 'Resume focus timer' : 'Pause focus timer'}
         >
           <Text style={styles.pauseButtonText}>
-            {progress >= 100 ? 'Session complete' : isPaused ? 'Resume' : 'Pause'}
+            {remainingSeconds === 0 ? 'Session complete' : isPaused ? 'Resume' : 'Pause'}
           </Text>
         </Pressable>
       </View>
@@ -100,12 +129,25 @@ const styles = StyleSheet.create({
     height: 50,
     marginBottom: 32,
   },
-  text: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  durationButton: {
+    flex: 1,
+    minHeight: 48,
+    borderRadius: 24,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.75)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  durationButtonSelected: {
+    backgroundColor: 'white',
+  },
+  durationText: {
     color: 'white',
-    alignSelf: 'center',
-    marginLeft: 0,
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  durationTextSelected: {
+    color: '#7f4141',
   },
   taskText: {
     color: 'white',
@@ -125,7 +167,7 @@ const styles = StyleSheet.create({
   },
   countValue: {
     color: 'white',
-    fontSize: 72,
+    fontSize: 64,
     fontWeight: 'bold',
     fontVariant: ['tabular-nums'],
     lineHeight: 84,
