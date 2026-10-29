@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, ImageBackground} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useState, useEffect} from 'react';
 import {StatusBar} from 'expo-status-bar';
@@ -27,6 +27,11 @@ export default function FocusTime({onBack, task}) {
     }, [isPaused, progress]);
 
   return(
+    <ImageBackground
+      source={require('../../images/sun set .jpg')}
+      resizeMode="cover"
+      style={styles.backgroundImage}
+    >
     <SafeAreaView style={styles.background}>
       <StatusBar style="light" />
       <View style={{ width: '100%', alignItems: 'stretch' }}>
@@ -62,15 +67,19 @@ export default function FocusTime({onBack, task}) {
         </TouchableOpacity>
       </View>
     </SafeAreaView>
+    </ImageBackground>
   );
 }
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    backgroundColor: '#f1ebeb',
+    backgroundColor: 'rgba(0, 0, 0, 0.28)',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 24,
+  },
+  backgroundImage: {
+    flex: 1,
   },
   inputContainer: {
     width: '100%',

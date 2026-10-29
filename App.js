@@ -1,4 +1,4 @@
-import {Text, View, StyleSheet, TouchableOpacity, TextInput} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity, TextInput, ImageBackground} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useState, useEffect} from 'react';
 import FocusTime from './.claude/component/FocusTime';
@@ -13,6 +13,11 @@ export default function App() {
   onBack={() => setShowFocusTime(false)} />;
 }
   return(
+    <ImageBackground
+      source={require('./images/sun set .jpg')}
+      resizeMode="cover"
+      style={styles.backgroundImage}
+    >
     <SafeAreaView style={styles.background}>
       <View style={styles.inputContainer}>
       <TextInput style={styles.input} placeholder="What do you want to focus on?"
@@ -37,14 +42,18 @@ export default function App() {
       )}
       <Text style={styles.text}>My App</Text>
     </SafeAreaView>
+    </ImageBackground>
   );
 }
   const styles = StyleSheet.create({
     background: {
       flex: 1,
-      backgroundColor: '#9b9b54',
+      backgroundColor: 'rgba(0, 0, 0, 0.28)',
       alignItems: 'flex-start',
       justifyContent: 'flex-start',
+    },
+    backgroundImage: {
+      flex: 1,
     },
     input: {
       height: 50,
