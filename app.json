@@ -1,5 +1,6 @@
 {
   "expo": {
+    "plugins": ["expo-router"],
     "name": "daysmaker",
     "slug": "daysmaker",
     "version": "1.0.0",
